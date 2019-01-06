@@ -1,0 +1,7 @@
+uuid: f6b408ced3ca71702341c18204d5935b
+destination: /usr/src/app
+before: echo -- Updating --
+after: echo -- COMPLETE --
+ignore:
+  - .git
+local_balenaos: {}

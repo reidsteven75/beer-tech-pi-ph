@@ -1,30 +1,45 @@
 from flask import Flask
 import serial
 import requests
+from time import sleep
 app = Flask(__name__)
 
-webserver = '192.168.1.79:3000/'
+webserver = 'https://beer-tech-web-qa.herokuapp.com/'
 portArduinoPh = '/dev/ttyUSB0'
 portAduinoPhBaudrate = 9600
 
 def postData(rawData):
-	url = webserver + 'sensor/ph'
+	url = webserver + 'sensorPh'
 	data = {'data': rawData}
 	r = requests.post(url, data)
-	print(r.text)
 
 def streamSerialUsb():
-	print("opening port {}".format(portArduinoPh))
-	ser = serial.Serial(portArduinoPh)
-	ser.baudrate = portAduinoPhBaudrate
-	
-	while True:
-		output = " "
-		print("----")
-		while output != "":
-			output = ser.readline()
-			print(output)
-			postData(output)
+	try:
+		print("opening port {}".format(portArduinoPh))
+		ser = serial.Serial(portArduinoPh)
+		ser.baudrate = portAduinoPhBaudrate
+		
+		while True:
+			try:
+				output = " "
+				while output != "":
+					output = ser.readline()
+					print(output)
+					postData(output)
+			except Exception as e:
+				print("USB stream error: " + str(e))
+				break
+
+		ser.close()
+		retryUsb()
+		
+	except Exception as e:
+		print("USB port open error: " + str(e))
+		retryUsb()
+
+def retryUsb():
+	sleep(2)
+	streamSerialUsb()
 
 if __name__ == '__main__':
 

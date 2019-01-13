@@ -4,12 +4,13 @@ import requests
 from time import sleep
 app = Flask(__name__)
 
-webserver = 'https://beer-tech-web-qa.herokuapp.com/'
+webserver = 'https://beer-tech-web-prod.herokuapp.com'
+# webserver = 'https://beer-tech-web-qa.herokuapp.com'
 portArduinoPh = '/dev/ttyUSB0'
 portAduinoPhBaudrate = 9600
 
 def postData(rawData):
-	url = webserver + 'sensorPh'
+	url = webserver + '/sensorPh'
 	data = {'data': rawData}
 	r = requests.post(url, data)
 

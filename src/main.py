@@ -10,7 +10,7 @@ portArduinoPh = '/dev/ttyUSB0'
 portAduinoPhBaudrate = 9600
 
 def postData(rawData):
-	url = webserver + '/sensorPh'
+	url = webserver + '/sensor'
 	data = {'data': rawData}
 	r = requests.post(url, data)
 

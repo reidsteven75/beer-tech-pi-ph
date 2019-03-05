@@ -38,8 +38,6 @@ void setup(void) {
 // TEMP
 void serialEvent() {                                  //if the hardware serial port_0 receives a char
   inputstring = Serial.readStringUntil(13);           //read the string until we see a <CR>
-  Serial.print("[TEMP]");
-  Serial.println(inputstring);
 }
 
 // PH
@@ -59,6 +57,8 @@ void loop(void) {
   }
   if(millis() - printTime > printInterval)   //Every 800 milliseconds, print a numerical, convert the state of the LED indicator
   {
+    Serial.print("[TEMP]");
+    Serial.println(inputstring);
     Serial.print("[PH]");
     Serial.println(pHValue,2);
     digitalWrite(LED,digitalRead(LED)^1);

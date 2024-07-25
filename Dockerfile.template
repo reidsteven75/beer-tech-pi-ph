@@ -1,6 +1,7 @@
 # base-image for python on any machine using a template variable,
 # see more about dockerfile templates here:http://docs.resin.io/pages/deployment/docker-templates
-FROM resin/%%RESIN_MACHINE_NAME%%-python:3
+FROM balenalib/%%RESIN_MACHINE_NAME%%-python:3
+# FROM balenalib/raspberry-pi2-python:3 
 
 # use apt-get if you need to install dependencies,
 # for instance if you need ALSA sound utils, just uncomment the lines below.
@@ -24,9 +25,11 @@ COPY . ./
 ENV INITSYSTEM on
 
 # wifi-connect
-RUN curl https://api.github.com/repos/balena-io/wifi-connect/releases/latest -s \
-    | grep -hoP 'browser_download_url": "\K.*%%RESIN_ARCH%%\.tar\.gz' \
-    | xargs -n1 curl -Ls \
-    | tar -xvz -C /usr/src/app/
+RUN curl -L https://github.com/balena-io/wifi-connect/raw/master/scripts/raspbian-install.sh
+
+# RUN curl https://api.github.com/repos/balena-io/wifi-connect/releases/latest -s \
+#     | grep -hoP 'browser_download_url": "\K.*%%RESIN_ARCH%%\.tar\.gz' \
+#     | xargs -n1 curl -Ls \
+#     | tar -xvz -C /usr/src/app/
 
 CMD ["bash", "start.sh"]

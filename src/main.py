@@ -5,7 +5,7 @@ import threading
 from time import sleep
 app = Flask(__name__)
 
-webserver = 'https://beer-tech-web-prod.herokuapp.com'
+webserver = 'https://beer-tech-web.onrender.com'
 # webserver = 'https://beer-tech-web-qa.herokuapp.com'
 postServerInterval = 2
 portArduino = '/dev/ttyUSB0'
